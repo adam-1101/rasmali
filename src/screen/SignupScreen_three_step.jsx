@@ -1,7 +1,30 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react'
+import React, { useState } from 'react';
+import Toast from 'react-native-toast-message';
 
 const SignupScreen_three_step = ({navigation}) => {
+      const [selectedOption, setSelectedOption] = useState(null);
+
+      const handleOptionSelect = (option) => {
+            setSelectedOption(option);
+            Toast.show({
+                  type: 'success',
+                  text1: `Selected: ${option}`,
+                  position: 'bottom',
+            });
+      };
+
+      const handleNextPress = () => {
+            if (selectedOption) {
+                  navigation.navigate('Signup_four_step');
+            } else {
+                  Toast.show({
+                        type: 'error',
+                        text1: 'Please select an option before proceeding',
+                        position: 'bottom',
+                  });
+            }
+      };
       return (
             <View style={styles.container}>
                   <View style={styles.topImageContainer}>
@@ -20,19 +43,22 @@ const SignupScreen_three_step = ({navigation}) => {
 
                               <Text style={styles.question}>What is your risk tolerance?</Text>
                               
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === 'Low' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('Low')}>
                                     <Text style={styles.optionText}>Low</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === 'Medium' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('Medium')}>
                                     <Text style={styles.optionText}>Medium</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === 'High' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('High')}>
                                     <Text style={styles.optionText}>High</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity onPress={() => navigation.navigate('Signup_four_step')}>
+                              <TouchableOpacity onPress={handleNextPress}>
                                     <Image source={require("../assets/next.png")} style={styles.nextImage}/>
                               </TouchableOpacity>
 
@@ -125,6 +151,9 @@ const styles = StyleSheet.create({
             marginBottom: 15,
             width: '100%',
             alignItems: 'center',
+      },
+      selectedButton: {
+            backgroundColor: '#000000',
       },
       optionText: {
             color: '#FFFFFF',

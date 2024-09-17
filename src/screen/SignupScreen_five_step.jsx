@@ -1,7 +1,30 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react'
+import React, { useState } from 'react';
+import Toast from 'react-native-toast-message';
 
-const SignupScreen_five_step = () => {
+const SignupScreen_five_step = ({navigation}) => {
+      const [selectedOption, setSelectedOption] = useState(null);
+
+      const handleOptionSelect = (option) => {
+            setSelectedOption(option);
+            Toast.show({
+                  type: 'success',
+                  text1: `Selected: ${option}`,
+                  position: 'bottom',
+            });
+      };
+
+      const handleNextPress = () => {
+            if (selectedOption) {
+                  navigation.navigate('home');
+            } else {
+                  Toast.show({
+                        type: 'error',
+                        text1: 'Please select an option before proceeding',
+                        position: 'bottom',
+                  });
+            }
+      };
       return (
             <View style={styles.container}>
                   <View style={styles.topImageContainer}>
@@ -20,19 +43,22 @@ const SignupScreen_five_step = () => {
 
                               <Text style={styles.question}>How much do you plan to invest per project?</Text>
                               
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === '1000' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('1000')}>
                                     <Text style={styles.optionText}>1000 - 10 000DH</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === '100K' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('100K')}>
                                     <Text style={styles.optionText}>100K - 1MDH</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === '1MDH' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('1MDH')}>
                                     <Text style={styles.optionText}>+ 1MDH</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity >
+                              <TouchableOpacity onPress={handleNextPress}>
                                     <Image source={require("../assets/next.png")} style={styles.nextImage}/>
                               </TouchableOpacity>
 
@@ -125,6 +151,9 @@ const styles = StyleSheet.create({
             marginBottom: 15,
             width: '100%',
             alignItems: 'center',
+      },
+      selectedButton: {
+            backgroundColor: '#000000',
       },
       optionText: {
             color: '#FFFFFF',

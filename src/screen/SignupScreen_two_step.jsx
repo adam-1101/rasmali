@@ -1,7 +1,31 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react'
+import React, { useState } from 'react';
+import Toast from 'react-native-toast-message';
 
 const SignupScreen_two_step = ({navigation}) => {
+      const [selectedOption, setSelectedOption] = useState(null);
+
+      const handleOptionSelect = (option) => {
+            setSelectedOption(option);
+            Toast.show({
+                  type: 'success',
+                  text1: `Selected: ${option}`,
+                  position: 'bottom',
+            });
+      };
+
+      const handleNextPress = () => {
+            if (selectedOption) {
+                  navigation.navigate('Signup_three_step');
+            } else {
+                  Toast.show({
+                        type: 'error',
+                        text1: 'Please select an option before proceeding',
+                        position: 'bottom',
+                  });
+            }
+      };
+
       return (
             <View style={styles.container}>
                   <View style={styles.topImageContainer}>
@@ -20,19 +44,22 @@ const SignupScreen_two_step = ({navigation}) => {
 
                               <Text style={styles.question}>What is your main investment goal?</Text>
                               
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === 'Wealth growth' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('Wealth growth')}>
                                     <Text style={styles.optionText}>Wealth growth</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === 'Passive income' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('Passive income')}>
                                     <Text style={styles.optionText}>Passive income</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={styles.optionButton}>
+                              <TouchableOpacity style={[styles.optionButton, selectedOption === 'Retirement' && styles.selectedButton]} 
+                              onPress={() => handleOptionSelect('Retirement')}>
                                     <Text style={styles.optionText}>Retirement</Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity onPress={() => navigation.navigate('Signup_three_step')}>
+                              <TouchableOpacity onPress={handleNextPress}>
                                     <Image source={require("../assets/next.png")} style={styles.nextImage}/>
                               </TouchableOpacity>
 
@@ -125,6 +152,9 @@ const styles = StyleSheet.create({
             marginBottom: 15,
             width: '100%',
             alignItems: 'center',
+      },
+      selectedButton: {
+            backgroundColor: '#000000',
       },
       optionText: {
             color: '#FFFFFF',

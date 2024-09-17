@@ -23,13 +23,13 @@ const LandingScreen = ({navigation}) => {
 
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('Signup_first_step')}>
+            <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('Signup')}>
                   <Text style={styles.signUpText}>Sign Up</Text>
             </TouchableOpacity>
 
             <Text style={styles.orText}>Or</Text>
 
-            <TouchableOpacity style={styles.googleButton}>
+            <TouchableOpacity style={styles.googleButton} onPress={() => navigation.navigate('Explorer')}>
                   <Text style={styles.googleText}>
                         Continue with <Image source={require("../assets/google-icon.png")} style={styles.googleIcon} />
                   </Text>

@@ -10,6 +10,8 @@ import SignupScreen_two_step from './src/screen/SignupScreen_two_step';
 import SignupScreen_three_step from './src/screen/SignupScreen_three_step';
 import SignupScreen_four_step from './src/screen/SignupScreen_four_step';
 import SignupScreen_five_step from './src/screen/SignupScreen_five_step';
+import Explorer from './src/screen/ExplorerScreen';
+
 
 
 
@@ -30,6 +32,10 @@ const App = () => {
           <Stack.Screen name="Signup_four_step" component={SignupScreen_four_step} />
           <Stack.Screen name="Signup_five_step" component={SignupScreen_five_step} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen name="Explorer" component={Explorer} />
+
+
 
 
         </Stack.Navigator>
